@@ -2,17 +2,21 @@ import pandas as pd
 import sqlalchemy 
 import numpy as np
 from sqlalchemy import create_engine, MetaData, Table, select, inspect
+from glob import glob
+import os
 
 
 def main():
     """
     This code takes in a csv file representing delay minutes and converts it to the required formats
     """
+    combined_df = get_raw_data("input\\DM_Folder\\")
+    
     #import raw csv file
-    raw_data = pd.read_csv("input\Detailed Delay Minutes 2014-15 to 2019-20 All Regions.csv",encoding='cp1252')
+    #raw_data = pd.read_csv("input\Detailed Delay Minutes 2014-15 to 2019-20 All Regions.csv",encoding='cp1252')
     
     #drop unnecessary columns and concat three columns into one
-    raw_data = shapecolumns(raw_data)
+    raw_data = shapecolumns(combined_df)
 
     #get the financial_period lookup info
     dimt_fp = getfpdata('dbo','dimt_financial_period')
@@ -31,6 +35,49 @@ def main():
     prepared_data.to_csv('output/formatted_DM.csv', index=False)
 
 
+def get_raw_data(originfilepath):
+    dataframes = []
+    filepathsandnames = glob(f'{originfilepath}*.csv')
+    numberoffiles = len(filepathsandnames)
+
+    for count, file in enumerate(filepathsandnames,1):
+        print(f"Loading {os.path.basename(file)} into memory.")
+        print(f"That's {count} out of {numberoffiles}, or {str(int((count/numberoffiles)*100))} percent loaded.\n")
+        
+        
+        temp = pd.read_csv(file,encoding='Windows-1252',usecols=['Financial Year & Period','Route','Route Name',
+                                                                 'Area','Area Name','Delivery Unit','Delivery Unit Name',
+                                                                 'Incident Summary Group','Incident Category','Incident Category Description',
+                                                                 'Incident Reason','Incident Reason Description','Responsible Organisation',
+                                                                 'Responsible Organisation Name','Responsible Manager','Responsible Manager Name',
+                                                                 'Responsible Function Level 3 Desc','Responsible Function Level 3 Name',
+                                                                 'v_Incident Count','v_PfPI Minutes'])
+
+
+
+        temp.rename(columns={"Financial Year & Period":"Financial.Year...Period","Route":"Route","Route Name":"Route.Name Original",
+                             "Area":"Area","Area Name":"Area.Name","Delivery Unit":"Delivery.Unit","Delivery Unit Name":"Delivery.Unit.Name",
+                             "Incident Summary Group":"Incident.Summary.Group","Incident Category":"Incident.Category","Incident Category Description":"Incident.Category.Description",
+                             "Incident Reason":"Incident.Reason","Incident Reason Description":"Incident.Reason.Description","Responsible Organisation":"Responsible.Organisation",
+                             "Responsible Organisation Name":"Responsible.Organisation.Name","Responsible Manager":"Responsible.Manager","Responsible Manager Name":"Responsible.Manager.Name",
+                             "Responsible Function Level 3 Desc":"Responsible.Function.Level.3.Desc","Responsible Function Level 3 Name":"Responsible.Function.Level.3.Name",
+                             "v_Incident Count":"v_Incident.Count","v_PfPI Minutes":"v_PfPI.Minutes"
+
+                             
+                             },inplace=True)
+
+
+
+
+        dataframes.append(temp)
+    
+    combined_data = pd.concat(dataframes)
+    
+    print(combined_data.info())
+
+    return combined_data
+
+
 def shapecolumns(df):
     """
     This procedure drops unnecessary columns and creates option_1 column by concatting three columns together
@@ -42,11 +89,18 @@ def shapecolumns(df):
     df          A dataframe holding the transformed dataframe
     """
     print("dropping unnecessary columns\n")
-    #get rid of uncessary columns
-    df = df.drop(['Year','Route','Route.Name Original','Route Name Amended','Area','Area.Name',
+    #get rid of uncessary columns from conformed file
+    #df = df.drop(['Year','Route','Route.Name Original','Route Name Amended','Area','Area.Name',
+    #                          'Delivery.Unit','Incident.Summary.Group','Incident.Category.Description',
+    #                          'Responsible.Organisation','Responsible.Manager','Responsible.Manager.Name',
+    #                          'Responsible.Function.Level.3.Desc','Responsible.Function.Level.3.Name'],axis=1)
+
+    #get rid of uncessary columns from separate file
+    df = df.drop(['Route','Route.Name Original','Area','Area.Name',
                               'Delivery.Unit','Incident.Summary.Group','Incident.Category.Description',
                               'Responsible.Organisation','Responsible.Manager','Responsible.Manager.Name',
                               'Responsible.Function.Level.3.Desc','Responsible.Function.Level.3.Name'],axis=1)
+
 
     #join the three columns together
     df['Option_1'] = df['Incident.Reason.Description'] + "[" + df['Incident.Category'] + "]" + "[" + df['Incident.Reason'] + "]"
@@ -70,6 +124,14 @@ def handledates(raw_dataset,fp):
     """
     print("adding date information in required format\n")
     #format the date into fp key format as an int
+    
+    print("export data as test")
+    raw_dataset.to_csv('output/test.csv', index=False)
+    
+    #drop na dates
+    #raw_dataset.dropna(subset=['Financial.Year...Period'],inplace=True)
+
+
     raw_dataset['Financial.Year...Period'] = raw_dataset['Financial.Year...Period'].str.replace('/','20')
     raw_dataset['Financial.Year...Period'] = raw_dataset['Financial.Year...Period'].str.replace('_P','')
     raw_dataset['Financial.Year...Period'] = raw_dataset['Financial.Year...Period'].astype('int32')

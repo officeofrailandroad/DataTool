@@ -52,12 +52,7 @@ def get_weather_data(webaddress, weather_type, region):
     postString = txt_string.split("\n",5)[5]
 
     parse_column = ['year']
-    weather_data = pd.read_csv(StringIO(postString),delimiter=r'\s+',parse_dates=parse_column, engine='python')
-
-    print(weather_data.info())
-
-    # lose unnecessary columns
-    weather_data.drop(['win','spr','sum','aut','ann'],axis=1,inplace=True)
+    weather_data = pd.read_csv(StringIO(postString),delimiter=r'\s{1,5}',parse_dates=parse_column, engine='python',usecols=['year','jan','feb','mar','apr','may','jun','jul','aug','sep','oct',	'nov','dec'])
     
     print(weather_data)
     # add region and weather type information here
