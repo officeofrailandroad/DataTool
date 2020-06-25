@@ -36,6 +36,17 @@ def main():
 
 
 def get_raw_data(originfilepath):
+    """
+    This takes csv files from a specified folder in the DM format, takes the necessary columns, converts to appropriate datatypes and
+    appends them as a combined dataset
+
+    Parameters
+    originfilepath:     A string representing the file path to the required folder
+
+    Returns
+    combined_data:      A dataframe holding the full range of DM data
+
+    """
     dataframes = []
     filepathsandnames = glob(f'{originfilepath}*.csv')
     numberoffiles = len(filepathsandnames)
@@ -45,35 +56,33 @@ def get_raw_data(originfilepath):
         print(f"That's {count} out of {numberoffiles}, or {str(int((count/numberoffiles)*100))} percent loaded.\n")
         
         
+        datatypes = {'v_Incident Count':'int32','v_PfPI Minutes':'float64'}
+        #'v_Incident Count':'int32','v_PfPI Minutes':'float64'
         temp = pd.read_csv(file,encoding='Windows-1252',usecols=['Financial Year & Period','Route','Route Name',
                                                                  'Area','Area Name','Delivery Unit','Delivery Unit Name',
                                                                  'Incident Summary Group','Incident Category','Incident Category Description',
                                                                  'Incident Reason','Incident Reason Description','Responsible Organisation',
                                                                  'Responsible Organisation Name','Responsible Manager','Responsible Manager Name',
                                                                  'Responsible Function Level 3 Desc','Responsible Function Level 3 Name',
-                                                                 'v_Incident Count','v_PfPI Minutes'])
+                                                                 'v_Incident Count','v_PfPI Minutes'],dtype=datatypes)
+
+        
 
 
-
-        temp.rename(columns={"Financial Year & Period":"Financial.Year...Period","Route":"Route","Route Name":"Route.Name Original",
-                             "Area":"Area","Area Name":"Area.Name","Delivery Unit":"Delivery.Unit","Delivery Unit Name":"Delivery.Unit.Name",
-                             "Incident Summary Group":"Incident.Summary.Group","Incident Category":"Incident.Category","Incident Category Description":"Incident.Category.Description",
-                             "Incident Reason":"Incident.Reason","Incident Reason Description":"Incident.Reason.Description","Responsible Organisation":"Responsible.Organisation",
-                             "Responsible Organisation Name":"Responsible.Organisation.Name","Responsible Manager":"Responsible.Manager","Responsible Manager Name":"Responsible.Manager.Name",
-                             "Responsible Function Level 3 Desc":"Responsible.Function.Level.3.Desc","Responsible Function Level 3 Name":"Responsible.Function.Level.3.Name",
-                             "v_Incident Count":"v_Incident.Count","v_PfPI Minutes":"v_PfPI.Minutes"
-
-                             
-                             },inplace=True)
-
-
-
+        temp.rename(columns={'Financial Year & Period':'Financial.Year...Period','Route':'Route','Route Name':'Route.Name Original',
+                             'Area':'Area','Area Name':'Area.Name','Delivery Unit':'Delivery.Unit','Delivery Unit Name':'Delivery.Unit.Name',
+                             'Incident Summary Group':'Incident.Summary.Group','Incident Category':'Incident.Category','Incident Category Description':'Incident.Category.Description',
+                             'Incident Reason':'Incident.Reason','Incident Reason Description':'Incident.Reason.Description','Responsible Organisation':'Responsible.Organisation',
+                             'Responsible Organisation Name':'Responsible.Organisation.Name','Responsible Manager':'Responsible.Manager','Responsible Manager Name':'Responsible.Manager.Name',
+                             'Responsible Function Level 3 Desc':'Responsible.Function.Level.3.Desc','Responsible Function Level 3 Name':'Responsible.Function.Level.3.Name',
+                             'v_Incident Count':'v_Incident.Count','v_PfPI Minutes':'v_PfPI.Minutes'},inplace=True)
 
         dataframes.append(temp)
     
     combined_data = pd.concat(dataframes)
-    
-    print(combined_data.info())
+        
+    #print('this is combined info')
+    #print(combined_data.info())
 
     return combined_data
 
@@ -89,11 +98,6 @@ def shapecolumns(df):
     df          A dataframe holding the transformed dataframe
     """
     print("dropping unnecessary columns\n")
-    #get rid of uncessary columns from conformed file
-    #df = df.drop(['Year','Route','Route.Name Original','Route Name Amended','Area','Area.Name',
-    #                          'Delivery.Unit','Incident.Summary.Group','Incident.Category.Description',
-    #                          'Responsible.Organisation','Responsible.Manager','Responsible.Manager.Name',
-    #                          'Responsible.Function.Level.3.Desc','Responsible.Function.Level.3.Name'],axis=1)
 
     #get rid of uncessary columns from separate file
     df = df.drop(['Route','Route.Name Original','Area','Area.Name',
@@ -136,7 +140,7 @@ def handledates(raw_dataset,fp):
     raw_dataset['Financial.Year...Period'] = raw_dataset['Financial.Year...Period'].str.replace('_P','')
 
     raw_dataset = raw_dataset[raw_dataset['Financial.Year...Period'] != 'Financial Year & Period']
-    raw_dataset['Financial.Year...Period'].to_csv('output/date_strings.csv', index=False)
+    
 
     raw_dataset['Financial.Year...Period'] = raw_dataset['Financial.Year...Period'].astype('int32')
 
