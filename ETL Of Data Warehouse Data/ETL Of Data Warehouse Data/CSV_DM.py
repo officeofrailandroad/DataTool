@@ -128,12 +128,16 @@ def handledates(raw_dataset,fp):
     print("export data as test")
     raw_dataset.to_csv('output/test.csv', index=False)
     
-    #drop na dates
-    #raw_dataset.dropna(subset=['Financial.Year...Period'],inplace=True)
+    #drop na dates (caused by blank rows at end of dataset
+    raw_dataset.dropna(subset=['Financial.Year...Period'],inplace=True)
 
 
     raw_dataset['Financial.Year...Period'] = raw_dataset['Financial.Year...Period'].str.replace('/','20')
     raw_dataset['Financial.Year...Period'] = raw_dataset['Financial.Year...Period'].str.replace('_P','')
+
+    raw_dataset = raw_dataset[raw_dataset['Financial.Year...Period'] != 'Financial Year & Period']
+    raw_dataset['Financial.Year...Period'].to_csv('output/date_strings.csv', index=False)
+
     raw_dataset['Financial.Year...Period'] = raw_dataset['Financial.Year...Period'].astype('int32')
 
     joined_data = pd.merge(raw_dataset,fp,how='inner',left_on='Financial.Year...Period',
