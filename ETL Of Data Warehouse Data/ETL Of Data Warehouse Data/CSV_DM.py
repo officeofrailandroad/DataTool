@@ -129,9 +129,6 @@ def handledates(raw_dataset,fp):
     print("adding date information in required format\n")
     #format the date into fp key format as an int
     
-    print("export data as test")
-    raw_dataset.to_csv('output/test.csv', index=False)
-    
     #drop na dates (caused by blank rows at end of dataset
     raw_dataset.dropna(subset=['Financial.Year...Period'],inplace=True)
 
