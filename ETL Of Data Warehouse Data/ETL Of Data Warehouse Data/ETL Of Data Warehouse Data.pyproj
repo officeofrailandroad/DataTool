@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>d4e27e93-0860-453a-b762-d9ee476ff776</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>weather.py</StartupFile>
+    <StartupFile>CSV_DM.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
