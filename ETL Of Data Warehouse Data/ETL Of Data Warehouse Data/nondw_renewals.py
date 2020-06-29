@@ -18,6 +18,11 @@ def main():
 
     df_remapped = remap_routes(df)
 
+    df_remapped['min'] = df_remapped.groupby(['Measure','measure_group','route'])[['Actual','Budget']].transform('min')
+    
+    df_new = df_remapped.groupby(['Measure','measure_group','route'])[['Actual','Budget']].agg('min')
+
+    print(df_new)
     df_remapped.to_csv('output/renewals.csv',index=False)
 
     print(df_remapped)
