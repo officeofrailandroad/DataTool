@@ -25,6 +25,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ETL_Of_Data_Warehouse_Data.py" />
+    <Compile Include="nondw_renewals.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="weather.py">
       <SubType>Code</SubType>
     </Compile>
