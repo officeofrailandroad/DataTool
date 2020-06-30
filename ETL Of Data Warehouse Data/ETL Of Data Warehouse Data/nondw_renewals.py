@@ -2,6 +2,7 @@ import pandas as pd
 from glob import glob
 import os
 import numpy as np
+import datetime as dt
 
 def main():
     """
@@ -153,12 +154,12 @@ def derive_fy(filename):
     filename:       A string holding the filepath and filename of the file being processed
 
     Returns
-    fy_key          An int holding the date in a YYYYYYYY format, matching the datawarehouse's financial_year_key
+    fy_key          An datetime value holding the end of the financial year
     """
-    cfy = int(filename[21:23])
-    pfy = cfy-1
+    cfy =  int('20' + filename[21:23])
+    
 
-    fy_key = int('20' + str(pfy) + '20' + str(cfy))
+    fy_key = dt.date(cfy,3,31)
 
     return fy_key
     
