@@ -1,7 +1,7 @@
 import pandas as pd
 from glob import glob
 import os
-
+import numpy as np
 
 def main():
     """
@@ -115,6 +115,10 @@ def get_min_and_max(df):
          .agg(['min', 'max']))
 
     df_with_min_max = df.merge(df1, how='left', on=id_vars)
+
+    #where min and max match, increment max by 1
+    df_with_min_max['max'] = np.where(df_with_min_max['min']==df_with_min_max['max'],
+                                           df_with_min_max['max']+1,df_with_min_max['max'])
 
     return df_with_min_max
 
