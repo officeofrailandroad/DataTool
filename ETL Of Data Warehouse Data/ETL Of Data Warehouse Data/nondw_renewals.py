@@ -49,7 +49,7 @@ def main():
     final_data = add_metadata(final_data_minmax)
 
     #export the final dataset
-    final_data.to_csv('output/renewals.csv',index=False)
+    final_data.to_csv('output/formatted_nonDW_renewals.csv',index=False)
 
 
 

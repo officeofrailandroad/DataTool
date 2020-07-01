@@ -187,7 +187,8 @@ def getfpdata(schema_name,table_name):
 def stackminmaxvalues(unpivoted_data):
     """
     This takes the DM data and stacks the data into a single column.  It also calculates merges the min/max values for DM and Count by 
-    converting the irrelevant column into 0 and then adding that to the relevant column.
+    converting the irrelevant column into 0 and then adding that to the relevant column.  It also increments max value by 1 where max
+    and min are equal.
 
     Parameter
     unpivoted_data:     A dataframe holding the data in wide format
@@ -220,6 +221,10 @@ def stackminmaxvalues(unpivoted_data):
     new_data['min_value'] = new_data['min_minutes'] + new_data['min_inc_count']
     new_data['max_value'] = new_data['max_minutes'] + new_data['max_inc_count']
 
+
+    #where min and max match, increment max by 1
+    new_data['max_value'] = np.where(new_data['min_value']==new_data['max_value'],
+                                           new_data['max_value']+1,new_data['max_value'])
     #dropping the irrelvant columns
     del new_data['min_inc_count']
     del new_data['max_inc_count']

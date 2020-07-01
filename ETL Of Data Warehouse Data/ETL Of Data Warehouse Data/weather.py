@@ -72,6 +72,11 @@ def get_weather_data(webaddress, weather_type, region):
     weather_data['max'] = weather_data.max(axis=0)['value']
     weather_data['min'] = weather_data.min(axis=0)['value']
 
+    #where min and max match, increment max by 1
+    weather_data['max'] = np.where(weather_data['min']==weather_data['max'],
+                                           weather_data['max']+1,weather_data['max'])
+
+
     print("weather_data")
 
     weather_data = handle_dates(weather_data)
