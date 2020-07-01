@@ -53,7 +53,7 @@ def main():
     
     #export the final dataset
     exportfile(final_data,'output//NonDW_based_data//NONDW_102_RENEWALS//','NON_DW_102_RENEWALS')
-    #final_data.to_csv('output/formatted_nonDW_renewals.csv',index=False)
+    
 
 
 

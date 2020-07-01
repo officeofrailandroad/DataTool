@@ -265,7 +265,13 @@ def exportfile(df,destinationpath,filename,numberoffiles=1):
             pass
     else:
         print(f"the {filename} file should be quick.")
-   
+    
+    #delete all previous files in folder
+    files_to_delete = glob(destinationpath + '*')
+    for f in files_to_delete:
+        os.remove(f)
+    
+    #export the source_data
     df.to_csv(destinationpath + destinationfilename,index=False)
 
 
