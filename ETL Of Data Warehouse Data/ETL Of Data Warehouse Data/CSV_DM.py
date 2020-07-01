@@ -10,7 +10,7 @@ def main():
     """
     This code takes in a csv file representing delay minutes and converts it to the required formats
     """
-    combined_df = get_raw_data("input\\DM_Folder\\")
+    combined_df = get_raw_data("Input\\NODW\\NODW_103_DELAY_MINUTES\\")
     
     #import raw csv file
     #raw_data = pd.read_csv("input\Detailed Delay Minutes 2014-15 to 2019-20 All Regions.csv",encoding='cp1252')

@@ -27,7 +27,7 @@ def main():
     
 
 def get_list_of_urls():
-    urls = pd.read_excel('input/Weather data source (MetOffice).xlsx')
+    urls = pd.read_excel('input//NODW//NODW_101_WEATHER//Weather data source (MetOffice).xlsx')
     list_of_urls = urls['DATA SOURCE']
 
     return list_of_urls

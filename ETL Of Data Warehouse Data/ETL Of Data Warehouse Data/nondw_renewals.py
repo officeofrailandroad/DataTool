@@ -11,9 +11,9 @@ def main():
     This processes a series of files within a defined folder structure and outputs a csv file which hold in the agreed format
     the renewals data for all years in 8 route format for all categories
     """
-    sourcefilepath = 'input\\renewal_vols\\'
+    sourcefilepath = 'Input\\NODW\\NODW_102_RENEWALS\\'
     temp_data = []
-
+    
     #collect the paths and names of files to be loaded
     renewal_filepathsandnames = glob(f'{sourcefilepath}*.xlsx')
     numberoffiles = len(renewal_filepathsandnames)    
@@ -161,7 +161,7 @@ def derive_fy(filename):
     fy_key          An datetime value holding the end of the financial year
     fy_name         A string holding the name of the financial year in the format "YYYY-YYYY"
     """
-    cfy =  int('20' + filename[21:23])
+    cfy =  int('20' + filename[31:33])
     pfy =  str(cfy-1)
     fy_name = str(pfy) + '-'  + str(cfy)
 
