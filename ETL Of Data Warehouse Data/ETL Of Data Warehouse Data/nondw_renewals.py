@@ -27,11 +27,11 @@ def main():
     for count, file in enumerate(renewal_filepathsandnames,1):
         print(file)
     
-        fy = derive_fy(file)
+        fy,fyn = derive_fy(file)
         
         print(f"Loading {os.path.basename(file)} into memory.")
 
-        df = get_excel_data(file,routes,measure_group_ranges,fy)
+        df = get_excel_data(file,routes,measure_group_ranges,fy,fyn)
 
         print(f"That's {count} out of {numberoffiles}, or {str(int((count/numberoffiles)*100))} percent loaded.\n")
 
@@ -147,7 +147,7 @@ def remap_routes(df):
 
 def derive_fy(filename):
     """
-    This takes the year description of the file name, derive the previous year and then a financial year key which 
+    This takes the year description of the file name, derive the previous year and then an end of financial year date which 
     is then later added to the final dataframe
 
     Parameter
@@ -155,16 +155,18 @@ def derive_fy(filename):
 
     Returns
     fy_key          An datetime value holding the end of the financial year
+    fy_name         A string holding the name of the financial year in the format "YYYY-YYYY"
     """
     cfy =  int('20' + filename[21:23])
-    
+    pfy =  str(cfy-1)
+    fy_name = str(pfy) + '-'  + str(cfy)
 
     fy_key = dt.date(cfy,3,31)
 
-    return fy_key
+    return fy_key, fy_name
     
 
-def get_excel_data(source,routes,measure_ranges,fin_year):
+def get_excel_data(source,routes,measure_ranges,fin_year,fy_name):
     """
     This reads in data from an xlsx file through a series of tabs and ranges defined by lists and dictionaries.
     It depends on data being held in each spreadsheet in the same way.  The each measure group is joined into one dataframe
@@ -186,7 +188,7 @@ def get_excel_data(source,routes,measure_ranges,fin_year):
     for route in routes:
         
         for measure_group, ranges in measure_ranges.items():    
-            print(f'getting {measure_group} for {route} in {fin_year}')
+            print(f'getting {measure_group} for {route} in {fy_name}')
 
             temp_df = pd.read_excel(
                 source,route,
