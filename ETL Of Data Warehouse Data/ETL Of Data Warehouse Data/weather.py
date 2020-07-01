@@ -5,7 +5,7 @@ import xlsxwriter
 import calendar
 import numpy as np
 import datetime
-
+from ETL_Of_Data_Warehouse_Data import exportfile
 
 def main():
     
@@ -22,8 +22,9 @@ def main():
 
     all_data = pd.concat(full_dataset)
 
-    all_data.to_csv('output/formatted_weather.csv', index=False)
-
+    #all_data.to_csv('output/formatted_weather.csv', index=False)
+    exportfile(all_data,'output//NonDW_based_data//NONDW_101_WEATHER//','NONDW_101_WEATHER')
+    
 
 def get_list_of_urls():
     urls = pd.read_excel('input/Weather data source (MetOffice).xlsx')

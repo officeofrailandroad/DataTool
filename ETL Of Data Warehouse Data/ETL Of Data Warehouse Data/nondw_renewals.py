@@ -3,6 +3,8 @@ from glob import glob
 import os
 import numpy as np
 import datetime as dt
+from ETL_Of_Data_Warehouse_Data import exportfile
+
 
 def main():
     """
@@ -47,9 +49,11 @@ def main():
 
     #reshape the data into the final format
     final_data = add_metadata(final_data_minmax)
-
+    
+    
     #export the final dataset
-    final_data.to_csv('output/formatted_nonDW_renewals.csv',index=False)
+    exportfile(final_data,'output//NonDW_based_data//NONDW_102_RENEWALS//','NON_DW_102_RENEWALS')
+    #final_data.to_csv('output/formatted_nonDW_renewals.csv',index=False)
 
 
 

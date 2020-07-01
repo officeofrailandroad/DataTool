@@ -11,43 +11,30 @@ import numpy as np
 
 
 def main():
-    
-    csvinput = 'C:\\Users\\gwilliams\\Desktop\\Python Experiments\\work projects\\Data Mapper\\ETL Of Data Warehouse Data\\ETL Of Data Warehouse Data\\Input\\'
-    outputgoesto = 'C:\\Users\\gwilliams\\Desktop\\Python Experiments\\work projects\\Data Mapper\\ETL Of Data Warehouse Data\\ETL Of Data Warehouse Data\output\\'
-    
+      
     start_period =datetime.datetime(2006,1,1)
-    dwtables = ['factv_106_TSR_DT','factv_326_FDM_Final_DT','factv_327_CP6ReliabilityandSustainability_DT','factv_318_PPM_Periodic_DT']
-    temp_dw_list = list()
     
-    for table in dwtables:
-        
+    #dictionary holding the output file path and file name
+    dwtables = {'factv_106_TSR_DT':['output\\DW_based_data\\DW106_TSR\\','DW_106_TSR'],
+                'factv_326_FDM_Final_DT':['output\\DW_based_data\\DW326_FDM\\','DW326_FDM'],
+                'factv_327_CP6ReliabilityandSustainability_DT':['output\\DW_based_data\\DW327_RELIABILITY\\','DW327_FDM'],
+                'factv_318_PPM_Periodic_DT':['output\\DW_based_data\\DW318_PPMCASL\\','DW318_PPMCASL']}
+
+    #temp_dw_list = list()
+    
+    for table in dwtables.keys():
         df = getDWdata('NR',table,start_period)
 
         print(f"transforming data from {table}")
         transformed_dw_data = transform_dw_data(df)
         
-        temp_dw_list.append(transformed_dw_data)
+        ##temp_dw_list.append(transformed_dw_data)
     
-    final_data = pd.concat(temp_dw_list)
+    ##final_data = pd.concat(temp_dw_list)
 
-    exportfile(final_data,outputgoesto,f'combined_DW_output')    
-
-    #placeholder for csv files to be input
-    #csvdict,filecount = getcsvdata(csvinput)
-
-    #csvdatalist = list()
-    #for filename, data in csvdict.items():
-    #    
-    #    if filename[0:3] == '104':
-    #        
-    #        temp = transform_104(data,start_period)
-    #
-    #        csvdatalist.append(temp)
+        exportfile(transformed_dw_data,dwtables[table][0],dwtables[table][1])    
 
 
-    #csvdata = combinecsvfiles(csvdatalist,filecount)
-
-    #exportfile(csvdata,outputgoesto,f'combined_CSV_output') 
 
 
 def transform_104(csv_data,start_period):
@@ -279,7 +266,7 @@ def exportfile(df,destinationpath,filename,numberoffiles=1):
     else:
         print(f"the {filename} file should be quick.")
    
-    df.to_csv(destinationpath + destinationfilename)
+    df.to_csv(destinationpath + destinationfilename,index=False)
 
 
 def getcsvdata(csvinput):

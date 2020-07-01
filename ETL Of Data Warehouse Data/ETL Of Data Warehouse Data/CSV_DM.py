@@ -4,7 +4,7 @@ import numpy as np
 from sqlalchemy import create_engine, MetaData, Table, select, inspect
 from glob import glob
 import os
-
+from ETL_Of_Data_Warehouse_Data import exportfile
 
 def main():
     """
@@ -31,9 +31,7 @@ def main():
     prepared_data = addnewcolumns(pivoted_data)
 
     #export finished dataset
-    print("exporting data.  This might take a while.")
-    prepared_data.to_csv('output/formatted_DM.csv', index=False)
-
+    exportfile(prepared_data,'output//NonDW_based_data//NONDW_103_DELAY_MINUTES//','NON_DW_103_DELAY_MINUTES')
 
 def get_raw_data(originfilepath):
     """
