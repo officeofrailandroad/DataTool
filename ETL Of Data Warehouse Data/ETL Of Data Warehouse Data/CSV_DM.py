@@ -5,6 +5,7 @@ from sqlalchemy import create_engine, MetaData, Table, select, inspect
 from glob import glob
 import os
 from ETL_Of_Data_Warehouse_Data import exportfile
+from blob_export import export_to_blob
 
 def main():
     """
@@ -31,7 +32,10 @@ def main():
     prepared_data = addnewcolumns(pivoted_data)
 
     #export finished dataset
-    exportfile(prepared_data,'output//NonDW_based_data//NONDW_103_DELAY_MINUTES//','NON_DW_103_DELAY_MINUTES')
+    exportfile(prepared_data,'output//NonDW_based_data//NONDW_103_DELAY_MINUTES//','NONDW_103_DELAY_MINUTES')
+
+    print('export to blob')
+    export_to_blob('output//NonDW_based_data//NONDW_103_DELAY_MINUTES//','NONDW_103_DELAY_MINUTES.csv')
 
 def get_raw_data(originfilepath):
     """

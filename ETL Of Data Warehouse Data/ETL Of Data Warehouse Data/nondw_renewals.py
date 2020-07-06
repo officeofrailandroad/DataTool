@@ -4,7 +4,7 @@ import os
 import numpy as np
 import datetime as dt
 from ETL_Of_Data_Warehouse_Data import exportfile
-
+from blob_export import export_to_blob
 
 def main():
     """
@@ -52,8 +52,10 @@ def main():
     
     
     #export the final dataset
-    exportfile(final_data,'output//NonDW_based_data//NONDW_102_RENEWALS//','NON_DW_102_RENEWALS')
+    exportfile(final_data,'output//NonDW_based_data//NONDW_102_RENEWALS//','NONDW_102_RENEWALS')
     
+    #export the final dataset to azure
+    export_to_blob('output//NonDW_based_data//NONDW_102_RENEWALS//','NONDW_102_RENEWALS.csv')
 
 
 

@@ -21,7 +21,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="blob.py">
+    <Compile Include="blob_export.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CSV_DM.py">

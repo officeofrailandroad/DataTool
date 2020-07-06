@@ -8,6 +8,7 @@ import datetime
 from ETL_Of_Data_Warehouse_Data import exportfile
 from glob import glob
 import os
+from blob_export import export_to_blob
 
 def main():
     
@@ -27,6 +28,8 @@ def main():
     #all_data.to_csv('output/formatted_weather.csv', index=False)
     exportfile(all_data,'output//NonDW_based_data//NONDW_101_WEATHER//','NONDW_101_WEATHER')
     
+    print('export to blob')
+    export_to_blob('output//NonDW_based_data//NONDW_101_WEATHER//','NONDW_101_WEATHER.csv')
 
 def get_list_of_urls():
     urls = pd.read_excel('input//NODW//NODW_101_WEATHER//Weather data source (MetOffice).xlsx')

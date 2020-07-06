@@ -8,6 +8,7 @@ from sqlalchemy.orm import sessionmaker
 from glob import glob
 import datetime
 import numpy as np
+from blob_export import export_to_blob
 
 
 def main():
@@ -16,9 +17,9 @@ def main():
     
     #dictionary holding the output file path and file name
     dwtables = {'factv_106_TSR_DT':['output\\DW_based_data\\DW106_TSR\\','DW_106_TSR'],
-                'factv_326_FDM_Final_DT':['output\\DW_based_data\\DW326_FDM\\','DW326_FDM'],
-                'factv_327_CP6ReliabilityandSustainability_DT':['output\\DW_based_data\\DW327_RELIABILITY\\','DW327_FDM'],
-                'factv_318_PPM_Periodic_DT':['output\\DW_based_data\\DW318_PPMCASL\\','DW318_PPMCASL']}
+                'factv_326_FDM_Final_DT':['output\\DW_based_data\\DW326_FDM\\','DW_326_FDM'],
+                'factv_327_CP6ReliabilityandSustainability_DT':['output\\DW_based_data\\DW327_RELIABILITY\\','DW_327_RELIABILITY'],
+                'factv_318_PPM_Periodic_DT':['output\\DW_based_data\\DW318_PPMCASL\\','DW_318_PPMCASL']}
 
     #temp_dw_list = list()
     
@@ -34,7 +35,7 @@ def main():
 
         exportfile(transformed_dw_data,dwtables[table][0],dwtables[table][1])    
 
-
+        export_to_blob(dwtables[table][0],dwtables[table][1]+'.csv')
 
 
 def transform_104(csv_data,start_period):
@@ -243,8 +244,9 @@ def exportfile(df,destinationpath,filename,numberoffiles=1):
     None, but does export dataframe df as a csv object
     """
      
-    formatted_date = datetime.datetime.now().strftime('%Y%m%d_%H-%M')
-    destinationfilename = f'{filename}_{formatted_date}.csv'
+    #formatted_date = datetime.datetime.now().strftime('%Y%m%d_%H-%M')
+    #destinationfilename = f'{filename}_{formatted_date}.csv'
+    destinationfilename = filename +'.csv'
     print(f"Exporting {filename} to {destinationpath}{destinationfilename}\n")
     checkmessage = "If you want to check on progress, refresh the folder "+ destinationpath + " and check the size of the " + filename + ".csv file. \n"  
 
