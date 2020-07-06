@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.28307.757
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ETL Of Data Warehouse Data", "ETL Of Data Warehouse Data\ETL Of Data Warehouse Data.pyproj", "{D4E27E93-0860-453A-B762-D9EE476FF776}"
 EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CSV_Delay_Minutes", "CSV_Delay_Minutes\CSV_Delay_Minutes.pyproj", "{3B18524C-21C0-4DDA-A882-704B0DD0E417}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,8 +13,6 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{D4E27E93-0860-453A-B762-D9EE476FF776}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D4E27E93-0860-453A-B762-D9EE476FF776}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3B18524C-21C0-4DDA-A882-704B0DD0E417}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3B18524C-21C0-4DDA-A882-704B0DD0E417}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

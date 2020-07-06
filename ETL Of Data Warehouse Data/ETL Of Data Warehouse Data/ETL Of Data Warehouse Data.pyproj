@@ -38,6 +38,7 @@
   <ItemGroup>
     <Folder Include="input\" />
     <Folder Include="internet_files\" />
+    <Folder Include="data\" />
     <Folder Include="output\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
