@@ -1,4 +1,5 @@
 import os, uuid
+import blob
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 
 
@@ -11,8 +12,9 @@ def main():
         # created after the application is launched in a console or with Visual Studio,
         # the shell or application needs to be closed and reloaded to take the
         # environment variable into account.
-        connect_str = os.getenv('EJA2t7+LfJy/JmMZAHJH3rQIoRMGUXb35kormu9X04hUZ0LRS4+wicNmNobGOHMsOqbHpd8c+vhg17l/9VCTXw==')
+        connect_str = os.getenv('AZURE_STORAGE_CONNECTION_STRING')
 
+        #print(os.getenv('EJA2t7+LfJy/JmMZAHJH3rQIoRMGUXb35kormu9X04hUZ0LRS4+wicNmNobGOHMsOqbHpd8c+vhg17l/9VCTXw=='))
         print(connect_str)
 
         # Create the BlobServiceClient object which will be used to create a container client
