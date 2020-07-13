@@ -1,5 +1,6 @@
-import os, uuid
+import os, sys, logging
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
+from azure.identity import DefaultAzureCredential
 
 
 def main():
@@ -7,6 +8,16 @@ def main():
 
 def export_to_blob(source_path,source_file_name):
     try:
+        #set up logging of data
+        logger = logging.getLogger('azure.storage.blob')
+        logger.setLevel(logging.DEBUG)
+
+        print("writing to log file")
+        handler = logging.FileHandler('output//logging//my_first_log.txt')
+        logger.addHandler(handler)
+
+
+
         
         # Retrieve the connection string for use with the application. The storage
         # connection string is stored in an environment variable on the machine
@@ -36,8 +47,8 @@ def export_to_blob(source_path,source_file_name):
 
         # Upload the created file
         with open(upload_file_path, "rb") as data:
-            blob_client.upload_blob(data,overwrite=True)
-
+            blob_client.upload_blob(data,overwrite=True,logging_enable=True)
+            
     except Exception as ex:
         print('Exception:')
         print(ex)
