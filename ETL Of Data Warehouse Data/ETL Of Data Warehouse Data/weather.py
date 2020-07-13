@@ -62,7 +62,7 @@ def get_weather_data(webaddress, weather_type, region):
     
     print(weather_data)
     # add region and weather type information here
-    weather_data['Location'] = region
+    weather_data['Location'] = '(MetOff) ' + region
     weather_data['Option_1'] = weather_type
     
     print("before min and max")
