@@ -90,14 +90,14 @@ def add_metadata(df):
     df['Option_5'] = 'x'
     df['min_value'] = df['min']
     df['max_value'] = df['max']
-    df['Value'] = df['value']
+    df['value'] = df['value']
 
     #drop unnecessary columns
     df.drop(columns= ['Measure','measure_group','route'],inplace=True)
 
     #reshape the columns into the required order
     df = df [['Base_Location','TOC','Criticality','Location','Location_Type','Natural_Frequency','Data_Type','Option_1',
-          'Option_2','Option_3','Option_4','Option_5','min_value','max_value','Date','Value']]
+          'Option_2','Option_3','Option_4','Option_5','min_value','max_value','Date','value']]
 
     return df
 
