@@ -243,7 +243,7 @@ def addnewcolumns(dataset):
     """
     print("adding the new static columns\n")
 
-    dataset.rename(columns={'Financial.Year...Period':'Date','variable':'Option_2','Responsible.Organisation.Name':'Option_3','value':'Value'}
+    dataset.rename(columns={'Financial.Year...Period':'Date','variable':'Option_2','Responsible.Organisation.Name':'Option_3','value':'value'}
                    ,inplace=True)
     dataset['Base_Location'] = dataset['Delivery.Unit.Name']
     dataset['TOC'] = 'x'
@@ -251,12 +251,12 @@ def addnewcolumns(dataset):
     dataset['Location'] = dataset['Delivery.Unit.Name']
     dataset['Location_Type'] = 'MDU'
     dataset['Natural_Frequency'] = 'Period'
-    dataset['Datatype'] = 'Delay_Minutes'
+    dataset['Data_Type'] = 'Delay_Minutes'
     dataset['Option_4'] = 'x'
     dataset['Option_5'] = 'x'
 
-    dataset = dataset[['Base_Location', 'TOC','Criticality' ,'Location' ,'Location_Type','Natural_Frequency' ,'Datatype','Option_1','Option_2','Option_3',
-                       'Option_4','Option_5','min_value','max_value','Date','Value']]
+    dataset = dataset[['Base_Location', 'TOC','Criticality' ,'Location' ,'Location_Type','Natural_Frequency' ,'Data_Type','Option_1','Option_2','Option_3',
+                       'Option_4','Option_5','min_value','max_value','Date','value']]
     
     #copy made of dataset to avoid the "setting on copy warning"
     final_data = dataset.copy()
