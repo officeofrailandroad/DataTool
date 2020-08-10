@@ -55,7 +55,7 @@ def main():
     exportfile(final_data,'output//NonDW_based_data//NONDW_102_RENEWALS//','NONDW_102_RENEWALS')
     
     #export the final dataset to azure
-    export_to_blob('output//NonDW_based_data//NONDW_102_RENEWALS//','NONDW_102_RENEWALS.csv')
+    #export_to_blob('output//NonDW_based_data//NONDW_102_RENEWALS//','NONDW_102_RENEWALS.csv')
 
 
 

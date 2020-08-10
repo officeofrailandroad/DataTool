@@ -36,7 +36,7 @@ def main():
     exportfile(prepared_data,'output//NonDW_based_data//NONDW_103_DELAY_MINUTES//','NONDW_103_DELAY_MINUTES')
 
     print('export to blob')
-    export_to_blob('output//NonDW_based_data//NONDW_103_DELAY_MINUTES//','NONDW_103_DELAY_MINUTES.csv')
+    #export_to_blob('output//NonDW_based_data//NONDW_103_DELAY_MINUTES//','NONDW_103_DELAY_MINUTES.csv')
 
 def get_raw_data(originfilepath):
     """
