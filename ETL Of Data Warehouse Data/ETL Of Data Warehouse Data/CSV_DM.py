@@ -20,11 +20,10 @@ def main():
     #drop unnecessary columns and concat three columns into one
     raw_data = shapecolumns(combined_df)
 
-    #get the financial_period lookup info
-    dimt_fp = getfpdata('dbo','dimt_financial_period')
+
 
     #lookup up last day of period and add to dataset
-    dated_data = handledates(raw_data,dimt_fp)
+    dated_data = handledates(raw_data)
 
     #stack the data into a single column for data
     pivoted_data = stackminmaxvalues(dated_data)
@@ -36,7 +35,7 @@ def main():
     exportfile(prepared_data,'output//NonDW_based_data//NONDW_103_DELAY_MINUTES//','NONDW_103_DELAY_MINUTES')
 
     print('export to blob')
-    #export_to_blob('output//NonDW_based_data//NONDW_103_DELAY_MINUTES//','NONDW_103_DELAY_MINUTES.csv')
+    export_to_blob('output//NonDW_based_data//NONDW_103_DELAY_MINUTES//','NONDW_103_DELAY_MINUTES.csv')
 
 def get_raw_data(originfilepath):
     """
@@ -118,24 +117,26 @@ def shapecolumns(df):
     return df
 
 
-def handledates(raw_dataset,fp):
+def handledates(raw_dataset):
     """
     This procedure takes the financial period column and converts it to a timedate format representing the last day of the period.
 
     Parameters
     raw_dataset:        A dataframe holding the data
-    fp:                 A dataframe holding the financial_period_key and last_day_of_period information
 
     Returns
     joined_data:        A dataframe holding the date information
     """
+    #get the financial_period lookup info
+    fp = getfpdata('dbo','dimt_financial_period')
+    
     print("adding date information in required format\n")
     #format the date into fp key format as an int
     
     #drop na dates (caused by blank rows at end of dataset
     raw_dataset.dropna(subset=['Financial.Year...Period'],inplace=True)
 
-
+    #convert date format to the DW financial period format
     raw_dataset['Financial.Year...Period'] = raw_dataset['Financial.Year...Period'].str.replace('/','20')
     raw_dataset['Financial.Year...Period'] = raw_dataset['Financial.Year...Period'].str.replace('_P','')
 
