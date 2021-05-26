@@ -15,7 +15,7 @@ def main():
     combined_df = get_raw_data("Input\\NODW\\NODW_103_DELAY_MINUTES\\")
     
     #import raw csv file
-    #raw_data = pd.read_csv("input\Detailed Delay Minutes 2014-15 to 2019-20 All Regions.csv",encoding='cp1252')
+    #raw_data = pd.read_csv("Delay Minutes 1819 to 2021.csv",encoding='cp1252')
     
     #drop unnecessary columns and concat three columns into one
     raw_data = shapecolumns(combined_df)
