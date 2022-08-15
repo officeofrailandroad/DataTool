@@ -17,7 +17,7 @@ def main():
     
     #dictionary holding the output file path and file name
     dwtables = {
-        'factv_106_TSR_DT':['output\\DW_based_data\\DW106_TSR\\','DW_106_TSR'],
+        #'factv_106_TSR_DT':['output\\DW_based_data\\DW106_TSR\\','DW_106_TSR'],
                 'factv_326_FDM_Final_DT':['output\\DW_based_data\\DW326_FDM\\','DW_326_FDM'],
                 'factv_327_CP6ReliabilityandSustainability_DT':['output\\DW_based_data\\DW327_RELIABILITY\\','DW_327_RELIABILITY'],
                 'factv_318_PPM_Periodic_DT':['output\\DW_based_data\\DW318_PPMCASL\\','DW_318_PPMCASL']}
